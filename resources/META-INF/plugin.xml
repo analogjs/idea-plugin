@@ -41,6 +41,7 @@
   <extensions defaultExtensionNs="JavaScript">
     <dialectSpecificHandlersFactory language="Analog"
                                     implementationClass="org.analogjs.codeInsight.AnalogSpecificHandlersFactory"/>
+    <frameworkIndexingHandler implementation="org.analogjs.index.AnalogIndexingHandler" version="0"/>
   </extensions>
   <extensions defaultExtensionNs="org.angular2">
     <templateScopesProvider implementation="org.analogjs.codeInsight.template.AnalogComponentScopeProvider"

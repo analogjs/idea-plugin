@@ -52,7 +52,7 @@
           "name": "defineMetadata",
           "js-symbol-kind": "function",
           "priority": "low",
-          "type": "(metadata: Omit<import(\"@angular/core\").Component, | 'template' | 'standalone' | 'changeDetection' | 'styles' | 'outputs' | 'inputs'>) => void"
+          "type": "(metadata: Omit<import(\"@angular/core\").Component, | 'template' | 'standalone' | 'changeDetection' | 'styles' | 'outputs' | 'inputs'> & { exposes?: unknown[] }) => void"
         },
         {
           "name": "onInit",
