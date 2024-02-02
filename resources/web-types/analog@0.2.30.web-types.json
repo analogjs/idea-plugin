@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json.schemastore.org/web-types",
+  "name": "@analogjs/platform",
+  "version": "0.2.30",
+  "description-markup": "markdown",
+  "default-icon": "icons/analog.svg",
+  "contributions": {
+    "html": {
+      "analog-top-level-elements": [
+        {
+          "name": "script",
+          "attributes": [
+            {
+              "name": "lang",
+              "value": {
+                "kind": "plain",
+                "type": "enum"
+              },
+              "values": [
+                {
+                  "name": "ts"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "template",
+          "attributes": [
+            {
+              "name": "lang",
+              "value": {
+                "kind": "plain",
+                "type": "enum"
+              },
+              "values": [
+                {
+                  "name": "html"
+                },
+                {
+                  "name": "md"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "js": {
+      "analog-script-symbols": [
+        {
+          "name": "defineMetadata",
+          "js-symbol-kind": "function",
+          "priority": "low",
+          "type": "(metadata: Omit<import(\"@angular/core\").Component, | 'template' | 'standalone' | 'changeDetection' | 'styles' | 'outputs' | 'inputs'>) => void"
+        },
+        {
+          "name": "onInit",
+          "js-symbol-kind": "function",
+          "priority": "low",
+          "type": "(initFn: () => void) => void"
+        },
+        {
+          "name": "onDestroy",
+          "js-symbol-kind": "function",
+          "priority": "low",
+          "type": "(destroyFn: () => void) => void"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,49 @@
+<idea-plugin url="https://github.com/JetBrains/intellij-plugins/tree/master/Angular">
+ <id>Analog</id>
+ <name>Analog</name>
+ <category>JavaScript Frameworks and Tools</category>
+
+ <description><![CDATA[
+   <p>Provides support for <a href="https://analogjs.org/">.analog</a> files.</p>
+   <h2>Features</h2>
+   <ul>
+     <li>Syntax highlighting
+     <li>Code completion
+     <li>Rename refactoring
+   </ul>
+   ]]></description>
+  <vendor>JetBrains</vendor>
+
+  <depends>JavaScript</depends>
+ <depends>com.intellij.modules.platform</depends>
+ <depends>HtmlTools</depends>
+ <depends>intellij.webpack</depends>
+ <depends>AngularJS</depends>
+
+ <extensions defaultExtensionNs="com.intellij">
+   <stubElementTypeHolder class="org.analogjs.lang.parser.AnalogStubElementTypes" externalIdPrefix="ANALOG:"/>
+   <fileType name="Analog" implementationClass="org.analogjs.lang.AnalogFileType" fieldName="INSTANCE" extensions="analog"
+             language="Analog"/>
+   <lang.parserDefinition language="Analog" implementationClass="org.analogjs.lang.parser.AnalogParserDefinition"/>
+   <lang.syntaxHighlighterFactory language="Analog"
+                                  implementationClass="org.analogjs.lang.highlighting.AnalogHighlighterFactory"/>
+   <html.embeddedContentSupport implementation="org.analogjs.lang.lexer.AnalogEmbeddedContentSupport"/>
+   <completion.contributor language="Angular2"
+                           implementationClass="org.analogjs.codeInsight.AnalogCompletionContributor"
+                           id="AnalogCompletionContributor"
+                           order="before Angular2CompletionContributor"/>
+   <include.provider implementation="org.analogjs.index.AnalogFileIncludeProvider"/>
+   <webSymbols.webTypes source="web-types/analog@0.2.30.web-types.json"/>
+   <webSymbols.queryConfigurator implementation="org.analogjs.web.AnalogWebSymbolQueryConfigurator"/>
+   <implicitUsageProvider implementation="org.analogjs.codeInsight.AnalogImplicitUsageProvider"/>
+ </extensions>
+
+  <extensions defaultExtensionNs="JavaScript">
+    <dialectSpecificHandlersFactory language="Analog"
+                                    implementationClass="org.analogjs.codeInsight.AnalogSpecificHandlersFactory"/>
+  </extensions>
+  <extensions defaultExtensionNs="org.angular2">
+    <templateScopesProvider implementation="org.analogjs.codeInsight.template.AnalogComponentScopeProvider"
+                            id="analog" order="after component"/>
+  </extensions>
+</idea-plugin>
