@@ -21,6 +21,10 @@ const val FUN_DEFINE_METADATA = "defineMetadata"
 
 const val PROP_EXPOSES = "exposes"
 
+const val ANALOG_EXTENSION = ".analog"
+
+val AnalogFile.analogScript: AnalogScriptEmbeddedContentImpl?
+  get() = findAnalogScript(this)
 
 @StubSafe
 fun findAnalogScript(element: PsiElement?): AnalogScriptEmbeddedContentImpl? =
