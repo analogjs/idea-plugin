@@ -9,7 +9,7 @@ import com.intellij.lang.javascript.psi.util.JSStubBasedPsiTreeUtil
 import com.intellij.lang.javascript.psi.util.stubSafeCallArguments
 import org.analogjs.ANALOG_EXTENSION
 import org.analogjs.FUN_DEFINE_METADATA
-import org.analogjs.index.getFunctionNameFromIndex
+import org.analogjs.index.getFunctionNameFromAnalogIndex
 import org.analogjs.lang.AnalogFile
 import org.analogjs.lang.psi.impl.AnalogScriptEmbeddedContentImpl
 import java.util.*
@@ -17,16 +17,16 @@ import java.util.*
 @get:StubSafe
 val AnalogScriptEmbeddedContentImpl.defineMetadataCallInitializer: JSObjectLiteralExpression?
   get() = (stub
-    ?.childrenStubs
-    ?.asSequence()
-    ?.filterIsInstance<JSCallExpression>()
-    ?: children.asSequence()
-      .filterIsInstance<JSExpressionStatement>()
-      .flatMap { it.children.asSequence() }
-      .filterIsInstance<JSCallExpression>()
-      .filter { JSStubBasedPsiTreeUtil.isStubBased(it) }
-    )
-    .firstOrNull { getFunctionNameFromIndex(it) == FUN_DEFINE_METADATA }
+             ?.childrenStubs
+             ?.asSequence()
+             ?.filterIsInstance<JSCallExpression>()
+           ?: children.asSequence()
+             .filterIsInstance<JSExpressionStatement>()
+             .flatMap { it.children.asSequence() }
+             .filterIsInstance<JSCallExpression>()
+             .filter { JSStubBasedPsiTreeUtil.isStubBased(it) }
+          )
+    .firstOrNull { getFunctionNameFromAnalogIndex(it) == FUN_DEFINE_METADATA }
     ?.stubSafeCallArguments
     ?.firstNotNullOfOrNull { it as? JSObjectLiteralExpression }
 

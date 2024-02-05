@@ -15,8 +15,11 @@ import com.intellij.psi.stubs.IndexSink
 import com.intellij.psi.stubs.StubIndexKey
 import org.analogjs.FUN_DEFINE_METADATA
 import org.analogjs.lang.parser.AnalogStubElementTypes
+import org.angular2.Angular2DecoratorUtil.INPUT_FUN
+import org.angular2.lang.Angular2LangUtil.EVENT_EMITTER
 
-private val STUBBED_FUNCTIONS = listOf(FUN_DEFINE_METADATA)
+private val STUBBED_CALL_EXPRESSIONS = listOf(FUN_DEFINE_METADATA, INPUT_FUN)
+private val STUBBED_NEW_EXPRESSIONS = listOf(EVENT_EMITTER)
 
 private const val ANALOG_FUNCTION_NAME_USER_STRING = "analogfn"
 
@@ -24,7 +27,7 @@ private val INDEX_MAP = mapOf<String, StubIndexKey<String, JSImplicitElementProv
   ANALOG_FUNCTION_NAME_USER_STRING to null,
 )
 
-fun getFunctionNameFromIndex(call: JSCallExpression): String? =
+fun getFunctionNameFromAnalogIndex(call: JSCallExpression): String? =
   call.indexingData
     ?.implicitElements
     ?.find { it.userString == ANALOG_FUNCTION_NAME_USER_STRING }
@@ -65,15 +68,19 @@ class AnalogIndexingHandler : FrameworkIndexingHandler() {
       .any { it.elementType == AnalogStubElementTypes.SCRIPT_EMBEDDED_CONTENT }
 
   private fun isAnalogStubbedFunctionCall(callNode: ASTNode): Boolean {
-    if (callNode.elementType !== JSStubElementTypes.CALL_EXPRESSION) return false
+    if (callNode.elementType !== JSStubElementTypes.CALL_EXPRESSION
+        && callNode.elementType !== JSStubElementTypes.TYPESCRIPT_NEW_EXPRESSION) return false
 
     val methodExpression = callNode.firstChildNode
+                             .let { if (it.elementType == JSTokenTypes.NEW_KEYWORD) it.treeNext?.treeNext else it }
+                           ?: return false
     if (methodExpression.elementType !== JSElementTypes.REFERENCE_EXPRESSION) return false
 
     val referencedNameElement =
       methodExpression.firstChildNode.takeIf { it.elementType == JSTokenTypes.IDENTIFIER }
       ?: return false
-    return STUBBED_FUNCTIONS.contains(referencedNameElement.text)
+    return (callNode.elementType == JSStubElementTypes.CALL_EXPRESSION && STUBBED_CALL_EXPRESSIONS.contains(referencedNameElement.text))
+           || (callNode.elementType == JSStubElementTypes.TYPESCRIPT_NEW_EXPRESSION && STUBBED_NEW_EXPRESSIONS.contains(referencedNameElement.text))
   }
 
   private fun createJSImplicitElementForFunctionCall(callExpression: JSCallExpression, outData: JSElementIndexingData) {

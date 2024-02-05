@@ -1,6 +1,9 @@
 package org.analogjs.lang.lexer
 
-import com.intellij.html.embedding.*
+import com.intellij.html.embedding.HtmlEmbeddedContentProvider
+import com.intellij.html.embedding.HtmlEmbeddedContentSupport
+import com.intellij.html.embedding.HtmlEmbedmentInfo
+import com.intellij.html.embedding.HtmlTagEmbeddedContentProvider
 import com.intellij.lang.Language
 import com.intellij.lang.css.CSSLanguage
 import com.intellij.lang.html.HTMLLanguage
