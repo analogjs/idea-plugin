@@ -5,12 +5,14 @@ import com.intellij.lang.javascript.psi.ecma6.ES6Decorator
 import com.intellij.lang.javascript.psi.ecma6.TypeScriptClass
 import com.intellij.lang.javascript.psi.util.stubSafeChildren
 import com.intellij.model.Pointer
+import com.intellij.openapi.vfs.VirtualFileManager
 import com.intellij.psi.PsiFile
-import com.intellij.psi.util.CachedValueProvider
-import com.intellij.psi.util.CachedValuesManager
+import com.intellij.psi.util.CachedValueProvider.Result
+import com.intellij.psi.util.PsiModificationTracker
 import com.intellij.refactoring.suggested.createSmartPointer
 import org.analogjs.analogScript
 import org.analogjs.lang.AnalogFile
+import org.angular2.Angular2DecoratorUtil
 import org.angular2.entities.*
 import org.angular2.entities.source.Angular2SourceUtil
 
@@ -20,35 +22,22 @@ class AnalogSourceComponent(file: AnalogFile) : AnalogSourceDirective(file), Ang
     get() = file
 
   override val imports: Set<Angular2Entity>
-    get() = file.analogScript
-              ?.stubSafeChildren
-              ?.asSequence()
-              ?.filterIsInstance<ES6ImportDeclaration>()
-              ?.flatMap { import ->
-                import.importedBindings
-                  .asSequence()
-                  .flatMap { it.multiResolve(false).asSequence() }
-                  .filter { it.isValidResult }
-                  .mapNotNull { Angular2EntitiesProvider.getEntity(it.element) } +
-                import.importSpecifiers
-                  .asSequence()
-                  .flatMap { it.multiResolve(false).asSequence() }
-                  .filter { it.isValidResult }
-                  .mapNotNull { Angular2EntitiesProvider.getEntity(it.element) }
-              }
-              ?.toSet()
-            ?: emptySet()
+    get() = getCachedValue {
+      Result.create(resolveImports(), PsiModificationTracker.MODIFICATION_COUNT)
+    }
 
   override val isScopeFullyResolved: Boolean
     get() = true
 
   override val ngContentSelectors: List<Angular2DirectiveSelector>
-    get() = CachedValuesManager.getCachedValue(file) {
-      CachedValueProvider.Result.create(Angular2SourceUtil.getNgContentSelectors(file), file)
+    get() = getCachedValue {
+      Result.create(Angular2SourceUtil.getNgContentSelectors(file), file)
     }
 
   override val cssFiles: List<PsiFile>
-    get() = emptyList() // TODO
+    get() = getCachedValue {
+      Result.create(findCssFiles(), VirtualFileManager.VFS_STRUCTURE_MODIFICATIONS, file)
+    }
 
   override val attributes: Collection<Angular2DirectiveAttribute>
     get() = emptyList()
@@ -71,4 +60,29 @@ class AnalogSourceComponent(file: AnalogFile) : AnalogSourceDirective(file), Ang
 
   override val typeScriptClass: TypeScriptClass?
     get() = null
+
+  private fun resolveImports() =
+    file.analogScript
+      ?.stubSafeChildren
+      ?.asSequence()
+      ?.filterIsInstance<ES6ImportDeclaration>()
+      ?.flatMap { import ->
+        import.importedBindings
+          .asSequence()
+          .flatMap { it.multiResolve(false).asSequence() }
+          .filter { it.isValidResult }
+          .mapNotNull { Angular2EntitiesProvider.getEntity(it.element) } +
+        import.importSpecifiers
+          .asSequence()
+          .flatMap { it.multiResolve(false).asSequence() }
+          .filter { it.isValidResult }
+          .mapNotNull { Angular2EntitiesProvider.getEntity(it.element) }
+      }
+      ?.toSet()
+    ?: emptySet()
+
+  private fun findCssFiles() =
+    Angular2SourceUtil.findCssFiles(getDefineMetadataProperty(Angular2DecoratorUtil.STYLE_URLS_PROP), true)
+      .plus(listOfNotNull(Angular2SourceUtil.getReferencedFile(getDefineMetadataProperty(Angular2DecoratorUtil.STYLE_URL_PROP), true)))
+      .toList()
 }
