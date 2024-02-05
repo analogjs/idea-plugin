@@ -10,18 +10,26 @@ import com.intellij.util.asSafely
 import com.intellij.util.indexing.FileBasedIndex
 import org.analogjs.index.ANALOG_DIRECTIVE_SELECTORS_INDEX_KEY
 import org.analogjs.lang.AnalogFile
+import org.analogjs.templateTag
 import org.angular2.entities.*
 
 class AnalogEntitiesSource : Angular2EntitiesSource {
 
+  override fun getSupportedEntityPsiElements(): List<Class<out PsiElement>> =
+    listOf(AnalogFile::class.java)
+
   override fun getEntity(element: PsiElement): Angular2Entity? =
     element.asSafely<AnalogFile>()?.let { file ->
       CachedValuesManager.getCachedValue(file) {
-        CachedValueProvider.Result.create(AnalogSourceComponent(file), file)
+        val hasTemplate = file.templateTag != null
+        CachedValueProvider.Result.create(
+          if (hasTemplate) AnalogSourceComponent(file) else AnalogSourceDirective(file),
+          file
+        )
       }
     }
 
-  override fun findDirectivesCandidates(project: Project, indexLookupName: String): List<Angular2Directive> {
+  override fun findDirectiveCandidates(project: Project, indexLookupName: String): List<Angular2Directive> {
     val psiManager = PsiManager.getInstance(project)
     return FileBasedIndex.getInstance()
       .getContainingFilesIterator(ANALOG_DIRECTIVE_SELECTORS_INDEX_KEY, indexLookupName, GlobalSearchScope.projectScope(project))

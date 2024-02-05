@@ -14,6 +14,7 @@ import com.intellij.psi.xml.XmlTag
 import com.intellij.util.SmartList
 import com.intellij.util.asSafely
 import com.intellij.xml.util.HtmlUtil
+import com.intellij.xml.util.HtmlUtil.TEMPLATE_TAG_NAME
 import org.analogjs.lang.AnalogFile
 import org.analogjs.lang.psi.impl.AnalogScriptEmbeddedContentImpl
 
@@ -25,6 +26,9 @@ const val ANALOG_EXTENSION = ".analog"
 
 val AnalogFile.analogScript: AnalogScriptEmbeddedContentImpl?
   get() = findAnalogScript(this)
+
+val AnalogFile.templateTag: XmlTag?
+  get() = findTopLevelAnalogTags(TEMPLATE_TAG_NAME).firstOrNull()
 
 @StubSafe
 fun findAnalogScript(element: PsiElement?): AnalogScriptEmbeddedContentImpl? =

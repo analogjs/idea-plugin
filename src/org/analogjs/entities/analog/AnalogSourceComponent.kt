@@ -1,48 +1,20 @@
 package org.analogjs.entities.analog
 
 import com.intellij.lang.ecmascript6.psi.ES6ImportDeclaration
-import com.intellij.lang.javascript.JSStringUtil
 import com.intellij.lang.javascript.psi.ecma6.ES6Decorator
 import com.intellij.lang.javascript.psi.ecma6.TypeScriptClass
 import com.intellij.lang.javascript.psi.util.stubSafeChildren
 import com.intellij.model.Pointer
-import com.intellij.openapi.util.UserDataHolderBase
-import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValuesManager
 import com.intellij.refactoring.suggested.createSmartPointer
-import org.analogjs.ANALOG_EXTENSION
 import org.analogjs.analogScript
-import org.analogjs.entities.defineMetadataCallInitializer
-import org.analogjs.entities.getDefaultSelector
 import org.analogjs.lang.AnalogFile
-import org.angular2.Angular2DecoratorUtil.SELECTOR_PROP
 import org.angular2.entities.*
 import org.angular2.entities.source.Angular2SourceUtil
-import java.util.*
 
-class AnalogSourceComponent(val file: AnalogFile) : UserDataHolderBase(), Angular2Component {
-
-  override fun getName(): String =
-    file.name.removeSuffix(ANALOG_EXTENSION).let {
-      JSStringUtil.toPascalCase(it)
-    }
-
-  override val selector: Angular2DirectiveSelector
-    get() = CachedValuesManager.getCachedValue(file) {
-      val selectorProp = file.analogScript?.defineMetadataCallInitializer?.findProperty(SELECTOR_PROP)
-      val selector = if (selectorProp != null) {
-        Angular2SourceUtil.getComponentSelector(selectorProp, selectorProp)
-      }
-      else {
-        Angular2DirectiveSelectorImpl(file, getDefaultSelector(file), null)
-      }
-      CachedValueProvider.Result.create(selector, file)
-    }
-
-  override val sourceElement: PsiElement
-    get() = file
+class AnalogSourceComponent(file: AnalogFile) : AnalogSourceDirective(file), Angular2Component {
 
   override val templateFile: PsiFile
     get() = file
@@ -78,25 +50,13 @@ class AnalogSourceComponent(val file: AnalogFile) : UserDataHolderBase(), Angula
   override val cssFiles: List<PsiFile>
     get() = emptyList() // TODO
 
-  override val exportAs: Map<String, Angular2DirectiveExportAs>
-    get() = emptyMap() // TODO
-
-  override val bindings: Angular2DirectiveProperties
-    get() = Angular2DirectiveProperties(emptyList(), emptyList()) // TODO
-
-  override val hostDirectives: Collection<Angular2HostDirective>
-    get() = emptyList() // TODO
-
-  override fun areHostDirectivesFullyResolved(): Boolean =
-    true
-
   override val attributes: Collection<Angular2DirectiveAttribute>
     get() = emptyList()
 
   override val directiveKind: Angular2DirectiveKind
     get() = Angular2DirectiveKind.REGULAR
 
-  override fun createPointer(): Pointer<out Angular2Component> {
+  override fun createPointer(): Pointer<AnalogSourceComponent> {
     val file = file.createSmartPointer()
     return Pointer {
       file.dereference()?.let { AnalogSourceComponent(it) }
