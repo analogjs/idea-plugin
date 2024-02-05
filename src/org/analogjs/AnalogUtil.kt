@@ -2,8 +2,6 @@ package org.analogjs
 
 import com.intellij.lang.ecmascript6.psi.ES6ImportSpecifier
 import com.intellij.lang.injection.InjectedLanguageManager
-import com.intellij.lang.javascript.psi.JSEmbeddedContent
-import com.intellij.lang.javascript.psi.JSExecutionScope
 import com.intellij.lang.javascript.psi.JSPsiNamedElementBase
 import com.intellij.lang.javascript.psi.StubSafe
 import com.intellij.psi.PsiElement
@@ -17,16 +15,22 @@ import com.intellij.util.SmartList
 import com.intellij.util.asSafely
 import com.intellij.xml.util.HtmlUtil
 import org.analogjs.lang.AnalogFile
+import org.analogjs.lang.psi.impl.AnalogScriptEmbeddedContentImpl
+
+const val FUN_DEFINE_METADATA = "defineMetadata"
+
+const val PROP_EXPOSES = "exposes"
+
 
 @StubSafe
-fun findModule(element: PsiElement?): JSExecutionScope? =
+fun findAnalogScript(element: PsiElement?): AnalogScriptEmbeddedContentImpl? =
   element
     ?.let { InjectedLanguageManager.getInstance(element.project) }
     ?.getTopLevelFile(element)
     ?.asSafely<XmlFile>()
     ?.findScriptTag()
     ?.let { tag ->
-      PsiTreeUtil.getStubChildOfType(tag, JSEmbeddedContent::class.java)
+      PsiTreeUtil.getStubChildOfType(tag, AnalogScriptEmbeddedContentImpl::class.java)
     }
 
 @StubSafe

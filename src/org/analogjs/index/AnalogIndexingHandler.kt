@@ -13,9 +13,10 @@ import com.intellij.lang.javascript.psi.stubs.JSImplicitElementStructure
 import com.intellij.lang.javascript.psi.stubs.impl.JSImplicitElementImpl
 import com.intellij.psi.stubs.IndexSink
 import com.intellij.psi.stubs.StubIndexKey
+import org.analogjs.FUN_DEFINE_METADATA
 import org.analogjs.lang.parser.AnalogStubElementTypes
 
-private val STUBBED_FUNCTIONS = listOf("defineMetadata")
+private val STUBBED_FUNCTIONS = listOf(FUN_DEFINE_METADATA)
 
 private const val ANALOG_FUNCTION_NAME_USER_STRING = "analogfn"
 

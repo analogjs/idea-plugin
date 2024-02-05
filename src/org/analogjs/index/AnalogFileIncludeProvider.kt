@@ -6,7 +6,7 @@ import com.intellij.lang.ecmascript6.index.JSFrameworkFileIncludeProvider
 import com.intellij.lang.ecmascript6.psi.impl.ES6ImportPsiUtil
 import com.intellij.psi.impl.include.FileIncludeInfo
 import com.intellij.util.indexing.FileContent
-import org.analogjs.findModule
+import org.analogjs.findAnalogScript
 import org.analogjs.lang.AnalogFileType
 
 /**
@@ -18,7 +18,7 @@ class AnalogFileIncludeProvider : JSFrameworkFileIncludeProvider(AnalogFileType)
     if (!ES6FileIncludeProvider.checkTextHasFromKeyword(content)) return emptyArray()
 
     val psiFile = content.psiFile
-    val importDeclarations = findModule(psiFile)?.let { ES6ImportPsiUtil.getImportDeclarations(it) } ?: emptyList()
+    val importDeclarations = findAnalogScript(psiFile)?.let { ES6ImportPsiUtil.getImportDeclarations(it) } ?: emptyList()
     return createFileIncludeInfos(importDeclarations)
   }
 }
