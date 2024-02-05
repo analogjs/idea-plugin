@@ -46,5 +46,7 @@
   <extensions defaultExtensionNs="org.angular2">
     <templateScopesProvider implementation="org.analogjs.codeInsight.template.AnalogComponentScopeProvider"
                             id="analog" order="after component"/>
+    <jsHandlersFactory implementation="org.analogjs.codeInsight.AnalogJSHandlersFactory"
+                       id="analog"/>
   </extensions>
 </idea-plugin>
