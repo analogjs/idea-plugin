@@ -2,8 +2,7 @@ package org.analogjs
 
 import com.intellij.lang.ecmascript6.psi.ES6ImportSpecifier
 import com.intellij.lang.injection.InjectedLanguageManager
-import com.intellij.lang.javascript.psi.JSPsiNamedElementBase
-import com.intellij.lang.javascript.psi.StubSafe
+import com.intellij.lang.javascript.psi.*
 import com.intellij.psi.PsiElement
 import com.intellij.psi.XmlElementVisitor
 import com.intellij.psi.impl.source.xml.stub.XmlTagStub
@@ -15,6 +14,7 @@ import com.intellij.util.SmartList
 import com.intellij.util.asSafely
 import com.intellij.xml.util.HtmlUtil
 import com.intellij.xml.util.HtmlUtil.TEMPLATE_TAG_NAME
+import org.analogjs.index.getFunctionNameFromAnalogIndex
 import org.analogjs.lang.AnalogFile
 import org.analogjs.lang.psi.impl.AnalogScriptEmbeddedContentImpl
 
@@ -29,6 +29,15 @@ val AnalogFile.analogScript: AnalogScriptEmbeddedContentImpl?
 
 val AnalogFile.templateTag: XmlTag?
   get() = findTopLevelAnalogTags(TEMPLATE_TAG_NAME).firstOrNull()
+
+fun isPropertyInDefineMetadata(element: PsiElement, propertyName: String): Boolean =
+  element.containingFile is AnalogFile
+  && element.parent.asSafely<JSProperty>()
+    ?.takeIf { it.name == propertyName }
+    ?.parent?.asSafely<JSObjectLiteralExpression>()
+    ?.parent?.asSafely<JSArgumentList>()
+    ?.parent?.asSafely<JSCallExpression>()
+    ?.let { getFunctionNameFromAnalogIndex(it) } == FUN_DEFINE_METADATA
 
 @StubSafe
 fun findAnalogScript(element: PsiElement?): AnalogScriptEmbeddedContentImpl? =

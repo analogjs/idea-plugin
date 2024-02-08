@@ -38,6 +38,12 @@
     <webSymbols.queryConfigurator implementation="org.analogjs.web.AnalogWebSymbolQueryConfigurator"/>
     <implicitUsageProvider implementation="org.analogjs.codeInsight.AnalogImplicitUsageProvider"/>
     <lang.formatter language="Analog" implementationClass="org.analogjs.lang.formatter.AnalogFormattingModelBuilder"/>
+    <psi.symbolReferenceProvider hostElementClass="com.intellij.lang.javascript.psi.JSLiteralExpression"
+                                 hostLanguage="TypeScript"
+                                 referenceClass="com.intellij.webSymbols.references.WebSymbolReference"
+                                 implementationClass="org.analogjs.web.references.AnalogDirectiveSelectorReferencesProvider"
+                                 targetClass="com.intellij.webSymbols.WebSymbol"/>
+    <webSymbols.declarationProvider implementation="org.analogjs.web.declarations.AnalogDirectiveSelectorDeclarationProvider"/>
   </extensions>
 
   <extensions defaultExtensionNs="JavaScript">
