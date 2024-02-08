@@ -37,6 +37,7 @@
     <webSymbols.webTypes source="web-types/analog@0.2.30.web-types.json"/>
     <webSymbols.queryConfigurator implementation="org.analogjs.web.AnalogWebSymbolQueryConfigurator"/>
     <implicitUsageProvider implementation="org.analogjs.codeInsight.AnalogImplicitUsageProvider"/>
+    <lang.formatter language="Analog" implementationClass="org.analogjs.lang.formatter.AnalogFormattingModelBuilder"/>
   </extensions>
 
   <extensions defaultExtensionNs="JavaScript">
