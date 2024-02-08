@@ -6,6 +6,7 @@ import com.intellij.lang.javascript.psi.ecma6.TypeScriptClass
 import com.intellij.lang.javascript.psi.util.stubSafeChildren
 import com.intellij.model.Pointer
 import com.intellij.openapi.vfs.VirtualFileManager
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.CachedValueProvider.Result
 import com.intellij.psi.util.PsiModificationTracker
@@ -25,6 +26,12 @@ class AnalogSourceComponent(file: AnalogFile) : AnalogSourceDirective(file), Ang
     get() = getCachedValue {
       Result.create(resolveImports(), PsiModificationTracker.MODIFICATION_COUNT)
     }
+
+  override val jsResolveScope: PsiElement?
+    get() = file.analogScript
+
+  override val jsExportScope: PsiElement?
+    get() = jsResolveScope
 
   override val isScopeFullyResolved: Boolean
     get() = true

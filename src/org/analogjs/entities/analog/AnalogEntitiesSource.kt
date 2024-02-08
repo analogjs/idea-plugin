@@ -1,5 +1,6 @@
 package org.analogjs.entities.analog
 
+import com.intellij.lang.injection.InjectedLanguageManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiManager
@@ -39,6 +40,11 @@ class AnalogEntitiesSource : Angular2EntitiesSource {
       .mapNotNull { Angular2EntitiesProvider.getDirective(it) }
       .toList()
   }
+  override fun findTemplateComponent(templateContext: PsiElement): Angular2Component? =
+    InjectedLanguageManager.getInstance(templateContext.project)
+      .getTopLevelFile(templateContext)
+      .asSafely<AnalogFile>()
+      ?.let { Angular2EntitiesProvider.getComponent(it) }
 
   override fun getAllModules(project: Project): Collection<Angular2Module> =
     emptyList()

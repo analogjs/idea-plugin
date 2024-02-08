@@ -39,6 +39,9 @@ open class AnalogSourceDirective(val file: AnalogFile)
   @Suppress("LeakingThis")
   private val hostDirectivesResolver = Angular2HostDirectivesResolver(this)
 
+  override val isModifiable: Boolean
+    get() = true
+
   override fun getName(): String =
     file.name.takeWhile { it != '.' }
       .let { JSStringUtil.toPascalCase(it) }
