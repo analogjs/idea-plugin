@@ -47,9 +47,6 @@ abstract class AnalogSourceDirectiveProperty(
         )
   }
 
-  override val owner: TypeScriptClass?
-    get() = null
-
   override val fieldName: String
     get() = variable.name ?: name
 

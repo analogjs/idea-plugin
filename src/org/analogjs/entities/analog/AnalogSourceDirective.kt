@@ -1,11 +1,10 @@
 package org.analogjs.entities.analog
 
 import com.intellij.lang.javascript.JSStringUtil
-import com.intellij.lang.javascript.psi.JSCallExpression
-import com.intellij.lang.javascript.psi.JSProperty
-import com.intellij.lang.javascript.psi.JSVariable
-import com.intellij.lang.javascript.psi.ecma6.ES6Decorator
-import com.intellij.lang.javascript.psi.ecma6.TypeScriptClass
+import com.intellij.lang.javascript.psi.*
+import com.intellij.lang.javascript.psi.types.JSNamedTypeFactory
+import com.intellij.lang.javascript.psi.types.JSTypeContext
+import com.intellij.lang.javascript.psi.types.JSTypeSourceFactory
 import com.intellij.model.Pointer
 import com.intellij.openapi.util.UserDataHolderBase
 import com.intellij.psi.PsiElement
@@ -14,6 +13,7 @@ import com.intellij.psi.util.CachedValueProvider.Result
 import com.intellij.psi.util.CachedValuesManager
 import com.intellij.refactoring.suggested.createSmartPointer
 import com.intellij.util.asSafely
+import com.intellij.webSymbols.WebSymbolApiStatus
 import com.intellij.webSymbols.WebSymbolQualifiedKind
 import org.analogjs.analogScript
 import org.analogjs.codeInsight.AnalogStubBasedScopeHandler
@@ -102,11 +102,20 @@ open class AnalogSourceDirective(val file: AnalogFile)
   override val isStandalone: Boolean
     get() = true
 
-  override val decorator: ES6Decorator?
-    get() = null
+  override val entitySource: PsiElement?
+    get() = file
 
-  override val typeScriptClass: TypeScriptClass?
-    get() = null
+  override val entitySourceName: String
+    get() = file.defaultExportedName
+
+  override val entityJsType: JSType?
+    get() = JSNamedTypeFactory.createType(getName(), JSTypeSourceFactory.createTypeSource(file), JSTypeContext.INSTANCE)
+
+  override val apiStatus: WebSymbolApiStatus
+    get() = WebSymbolApiStatus.Stable
+
+  override val templateGuards: List<JSElement>
+    get() = emptyList()
 
   protected fun getDefineMetadataProperty(name: String): JSProperty? {
     return file.analogScript?.defineMetadataCallInitializer?.findProperty(name)

@@ -1,8 +1,6 @@
 package org.analogjs.entities.analog
 
 import com.intellij.lang.ecmascript6.psi.ES6ImportDeclaration
-import com.intellij.lang.javascript.psi.ecma6.ES6Decorator
-import com.intellij.lang.javascript.psi.ecma6.TypeScriptClass
 import com.intellij.lang.javascript.psi.util.stubSafeChildren
 import com.intellij.model.Pointer
 import com.intellij.openapi.vfs.VirtualFileManager
@@ -61,12 +59,6 @@ class AnalogSourceComponent(file: AnalogFile) : AnalogSourceDirective(file), Ang
 
   override val isStandalone: Boolean
     get() = true
-
-  override val decorator: ES6Decorator?
-    get() = null
-
-  override val typeScriptClass: TypeScriptClass?
-    get() = null
 
   private fun resolveImports() =
     file.analogScript
