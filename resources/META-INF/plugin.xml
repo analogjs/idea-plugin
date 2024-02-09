@@ -10,9 +10,10 @@
       <li>Syntax highlighting
       <li>Code completion
       <li>Rename refactoring
+      <li>Auto-import for components
+      <li>Code formatting
     </ul>
     ]]></description>
-  <vendor>JetBrains</vendor>
 
   <depends>JavaScript</depends>
   <depends>com.intellij.modules.platform</depends>
@@ -21,6 +22,7 @@
   <depends>AngularJS</depends>
 
   <extensions defaultExtensionNs="com.intellij">
+    <dependencySupport kind="javascript" coordinate="npm:@analogjs/platform" displayName="Analog"/>
     <fileBasedIndex implementation="org.analogjs.index.AnalogDirectiveSelectorsIndex"/>
     <stubElementTypeHolder class="org.analogjs.lang.parser.AnalogStubElementTypes" externalIdPrefix="ANALOG:"/>
     <fileType name="Analog" implementationClass="org.analogjs.lang.AnalogFileType" fieldName="INSTANCE" extensions="analog"
