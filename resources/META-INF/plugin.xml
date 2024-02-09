@@ -63,4 +63,10 @@
                     id="analog" order="after ivy"/>
     <importsHandler implementation="org.analogjs.codeInsight.imports.AnalogImportsHandler"/>
   </extensions>
+  <actions resource-bundle="messages.AnalogBundle">
+    <action class="org.analogjs.actions.CreateAnalogTemplateAction" id="CreateAnalogTemplateAction"
+            icon="org.analogjs.AnalogIcons.Analog">
+      <add-to-group group-id="NewWebDevelopment" anchor="before" relative-to-action="NewJavaScriptFile"/>
+    </action>
+  </actions>
 </idea-plugin>

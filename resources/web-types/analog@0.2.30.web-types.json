@@ -4,6 +4,16 @@
   "version": "0.2.30",
   "description-markup": "markdown",
   "default-icon": "icons/analog.svg",
+  "contexts-config": {
+    "analog": {
+      "kind": "analog",
+      "enable-when": {
+        "node-packages": [
+          "@analogjs/platform"
+        ]
+      }
+    }
+  },
   "contributions": {
     "html": {
       "analog-top-level-elements": [
