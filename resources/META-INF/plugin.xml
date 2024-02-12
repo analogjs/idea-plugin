@@ -46,6 +46,10 @@
                                  implementationClass="org.analogjs.web.references.AnalogDirectiveSelectorReferencesProvider"
                                  targetClass="com.intellij.webSymbols.WebSymbol"/>
     <webSymbols.declarationProvider implementation="org.analogjs.web.declarations.AnalogDirectiveSelectorDeclarationProvider"/>
+    <!-- works in WebStorm and other SmallIDEs -->
+    <directoryProjectGenerator implementation="org.analogjs.AnalogProjectGenerator"/>
+    <!-- works in IDEA -->
+    <projectTemplatesFactory implementation="org.analogjs.AnalogProjectTemplateFactory"/>
   </extensions>
 
   <extensions defaultExtensionNs="JavaScript">
