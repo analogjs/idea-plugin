@@ -13,12 +13,21 @@ plugins {
   id("org.jetbrains.intellij")
 }
 
+val pluginVersion = prop("plugin.version")
+val ideType = prop("ide.type")
+val ideVersion = prop("ide.version")
+val ideSinceVersion = prop("ide.since")
+val ideUntilVersion = prop("ide.until")
+
+group = "org.analogjs."
+version = pluginVersion
+
 intellij {
   pluginName.set("Analog")
   plugins.set(listOf("JavaScript", "JSIntentionPowerPack", "HtmlTools", "com.intellij.css", "uml", "tslint", "intellij.webpack", "AngularJS"))
 
-  version.set("241.12662-EAP-CANDIDATE-SNAPSHOT")
-  type.set("IU")
+  version.set(ideVersion)
+  type.set(ideType)
 }
 
 sourceSets {
@@ -59,8 +68,12 @@ tasks {
   runIde {
     autoReloadPlugins.set(false)
   }
+  patchPluginXml {
+    sinceBuild.set(ideSinceVersion)
+    untilBuild.set(ideUntilVersion)
+  }
 }
 
-fun ext(name: String): String =
-  rootProject.extensions[name] as? String
-  ?: error("Property `$name` is not defined")
+fun prop(name: String): String =
+  extra.properties[name] as? String
+  ?: error("Property `$name` is not defined in gradle.properties")
