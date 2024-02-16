@@ -17,7 +17,7 @@ intellij {
   pluginName.set("Analog")
   plugins.set(listOf("JavaScript", "JSIntentionPowerPack", "HtmlTools", "com.intellij.css", "uml", "tslint", "intellij.webpack", "AngularJS"))
 
-  version.set("LATEST-EAP-SNAPSHOT")
+  version.set("241.12662-EAP-CANDIDATE-SNAPSHOT")
   type.set("IU")
 }
 
