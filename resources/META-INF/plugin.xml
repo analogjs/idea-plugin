@@ -1,7 +1,8 @@
-<idea-plugin url="https://github.com/JetBrains/intellij-plugins/tree/master/Angular">
+<idea-plugin url="https://github.com/analogjs/idea-plugin">
   <id>Analog</id>
   <name>Analog</name>
   <category>JavaScript Frameworks and Tools</category>
+  <vendor>Analog</vendor>
 
   <description><![CDATA[
     <p>Provides support for <a href="https://analogjs.org/">.analog</a> files.</p>
