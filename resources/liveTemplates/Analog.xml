@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templateSet group="Analog">
+    <template name="analog-component" value="&lt;script lang=&quot;ts&quot;&gt;&#10;&#10;&lt;/script&gt;&#10;&#10;&lt;template&gt;&#10;&#10;&lt;/template&gt;&#10;&#10;&lt;style&gt;&#10;&#10;&lt;/style&gt;" description="Create an empty Analog SFC" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="ANALOG" value="true" />
+        </context>
+    </template>
+</templateSet>
