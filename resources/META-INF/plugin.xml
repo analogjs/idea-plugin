@@ -51,6 +51,10 @@
     <directoryProjectGenerator implementation="org.analogjs.AnalogProjectGenerator"/>
     <!-- works in IDEA -->
     <projectTemplatesFactory implementation="org.analogjs.AnalogProjectTemplateFactory"/>
+    <defaultLiveTemplates file="/liveTemplates/Analog.xml"/>
+    <liveTemplateContext
+            contextId="ANALOG"
+            implementation="org.analogjs.liveTemplate.AnalogTemplateContextType"/>
   </extensions>
 
   <extensions defaultExtensionNs="JavaScript">
