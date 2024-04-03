@@ -12,7 +12,7 @@ Provides support for [.analog](https://analogjs.org/) single-file component (SFC
 
 # Pre-requisites
 
-- Requires IDEA Ultimate 2024.1 or WebStorm 2024.1
+- Requires IDEA Ultimate 2024.1 or WebStorm 2024.1 (EAP version)
 
 # Installation
 
