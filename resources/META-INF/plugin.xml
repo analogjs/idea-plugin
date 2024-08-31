@@ -28,6 +28,8 @@
     <stubElementTypeHolder class="org.analogjs.lang.parser.AnalogStubElementTypes" externalIdPrefix="ANALOG:"/>
     <fileType name="Analog" implementationClass="org.analogjs.lang.AnalogFileType" fieldName="INSTANCE" extensions="analog"
               language="Analog"/>
+    <fileType name="Analog Shorthand" implementationClass="org.analogjs.lang.AgFileType" fieldName="INSTANCE" extensions="ag"
+              language="Analog"/>
     <lang.parserDefinition language="Analog" implementationClass="org.analogjs.lang.parser.AnalogParserDefinition"/>
     <lang.syntaxHighlighterFactory language="Analog"
                                    implementationClass="org.analogjs.lang.highlighting.AnalogHighlighterFactory"/>
@@ -37,6 +39,7 @@
                             id="AnalogCompletionContributor"
                             order="before Angular2CompletionContributor"/>
     <include.provider implementation="org.analogjs.index.AnalogFileIncludeProvider"/>
+    <include.provider implementation="org.analogjs.index.AgFileIncludeProvider"/>
     <webSymbols.webTypes source="web-types/analog@0.2.30.web-types.json"/>
     <webSymbols.queryConfigurator implementation="org.analogjs.web.AnalogWebSymbolQueryConfigurator"/>
     <implicitUsageProvider implementation="org.analogjs.codeInsight.AnalogImplicitUsageProvider"/>

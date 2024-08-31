@@ -12,6 +12,7 @@ import com.intellij.util.io.KeyDescriptor
 import org.analogjs.analogScript
 import org.analogjs.entities.defineMetadataCallInitializer
 import org.analogjs.entities.getDefaultSelector
+import org.analogjs.lang.AgFileType
 import org.analogjs.lang.AnalogFile
 import org.analogjs.lang.AnalogFileType
 import org.angular2.Angular2DecoratorUtil
@@ -46,7 +47,7 @@ class AnalogDirectiveSelectorsIndex : ScalarIndexExtension<String>() {
 
   override fun getInputFilter(): InputFilter = object : BaseFileTypeInputFilter(AFTER_SUBSTITUTION) {
     override fun acceptFileType(fileType: FileType): ThreeState {
-      return if (fileType == AnalogFileType) {
+      return if (fileType == AnalogFileType || fileType == AgFileType) {
         ThreeState.UNSURE // check hasNodeModulesDirInPath
       }
       else {

@@ -24,6 +24,8 @@ const val PROP_EXPOSES = "exposes"
 
 const val ANALOG_EXTENSION = ".analog"
 
+const val AG_EXTENSION = ".ag"
+
 val AnalogFile.analogScript: AnalogScriptEmbeddedContentImpl?
   get() = findAnalogScript(this)
 
