@@ -70,7 +70,6 @@ tasks {
   }
   patchPluginXml {
     sinceBuild.set(ideSinceVersion)
-    untilBuild.set(ideUntilVersion)
   }
 }
 

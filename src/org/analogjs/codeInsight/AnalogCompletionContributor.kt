@@ -15,7 +15,7 @@ import org.angular2.lang.expr.psi.Angular2PipeReferenceExpression
 class AnalogCompletionContributor : CompletionContributor() {
   init {
     extend(CompletionType.BASIC,
-           PlatformPatterns.psiElement().with(language(Angular2Language.INSTANCE)),
+           PlatformPatterns.psiElement().with(language(Angular2Language)),
            TemplateExpressionCompletionProvider())
   }
 

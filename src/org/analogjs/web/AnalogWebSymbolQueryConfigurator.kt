@@ -51,7 +51,7 @@ class AnalogWebSymbolQueryConfigurator : WebSymbolsQueryConfigurator {
       0
   }
 
-  private val analogScriptSymbols = ReferencingWebSymbol(
+  private val analogScriptSymbols = ReferencingWebSymbol.create(
     WebSymbol.JS_SYMBOLS, "Analog Script Symbol", WebSymbolOrigin.empty(), ANALOG_SCRIPT_SYMBOLS)
 
 }
