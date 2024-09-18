@@ -15,6 +15,6 @@ open class AnalogStubBasedTagElementType(debugName: String) : HtmlStubBasedTagEl
       } ?: false
 
   override fun getExternalId(): String {
-    return EXTERNAL_ID_PREFIX + debugName
+    return EXTERNAL_ID_PREFIX + super.getExternalId()
   }
 }

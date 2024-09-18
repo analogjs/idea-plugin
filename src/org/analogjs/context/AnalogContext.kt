@@ -17,9 +17,7 @@ const val KIND_ANALOG = "analog"
 fun hasAnalogFiles(project: Project): Boolean =
   CachedValuesManager.getManager(project).getCachedValue(project) {
     CachedValueProvider.Result.create(
-      FileBasedIndexImpl.disableUpToDateCheckIn<Boolean, Exception> {
-        FileTypeIndex.containsFileOfType(AnalogFileType, GlobalSearchScope.projectScope(project))
-      },
+      FileTypeIndex.containsFileOfType(AnalogFileType, GlobalSearchScope.projectScope(project)),
       VirtualFileManager.VFS_STRUCTURE_MODIFICATIONS,
       DumbService.getInstance(project)
     )

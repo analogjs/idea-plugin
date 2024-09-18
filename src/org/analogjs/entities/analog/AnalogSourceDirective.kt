@@ -114,7 +114,7 @@ open class AnalogSourceDirective(val file: AnalogFile)
   override val apiStatus: WebSymbolApiStatus
     get() = WebSymbolApiStatus.Stable
 
-  override val templateGuards: List<JSElement>
+  override val templateGuards: List<Angular2TemplateGuard>
     get() = emptyList()
 
   protected fun getDefineMetadataProperty(name: String): JSProperty? {
