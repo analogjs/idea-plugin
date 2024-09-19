@@ -26,7 +26,7 @@
     <dependencySupport kind="javascript" coordinate="npm:@analogjs/platform" displayName="Analog"/>
     <fileBasedIndex implementation="org.analogjs.index.AnalogDirectiveSelectorsIndex"/>
     <stubElementTypeHolder class="org.analogjs.lang.parser.AnalogStubElementTypes" externalIdPrefix="ANALOG:"/>
-    <fileType name="Analog" implementationClass="org.analogjs.lang.AnalogFileType" fieldName="INSTANCE" extensions="analog"
+    <fileType name="Analog" implementationClass="org.analogjs.lang.AnalogFileType" fieldName="INSTANCE" extensions="analog;ag"
               language="Analog"/>
     <lang.parserDefinition language="Analog" implementationClass="org.analogjs.lang.parser.AnalogParserDefinition"/>
     <lang.syntaxHighlighterFactory language="Analog"
