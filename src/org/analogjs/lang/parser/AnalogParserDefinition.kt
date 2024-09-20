@@ -16,7 +16,7 @@ import org.angular2.lang.html.Angular2TemplateSyntax
 class AnalogParserDefinition : HTMLParserDefinition() {
 
   override fun createLexer(project: Project): Lexer {
-    return AnalogLexer(false, Angular2TemplateSyntax.V_17)
+    return AnalogLexer(false, Angular2TemplateSyntax.V_18_1)
   }
 
   override fun getFileNodeType(): IFileElementType {
@@ -32,5 +32,5 @@ class AnalogParserDefinition : HTMLParserDefinition() {
 
 class AnalogParser : HTMLParser() {
   override fun createHtmlParsing(builder: PsiBuilder): AnalogParsing =
-    AnalogParsing(Angular2TemplateSyntax.V_17, builder)
+    AnalogParsing(Angular2TemplateSyntax.V_18_1, builder)
 }

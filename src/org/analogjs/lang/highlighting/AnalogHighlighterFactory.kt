@@ -9,6 +9,6 @@ import org.angular2.lang.html.highlighting.Angular2HtmlFileHighlighter
 
 class AnalogHighlighterFactory : SyntaxHighlighterFactory() {
   override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?): SyntaxHighlighter {
-    return Angular2HtmlFileHighlighter(Angular2TemplateSyntax.V_17, null)
+    return Angular2HtmlFileHighlighter(Angular2TemplateSyntax.V_18_1, null)
   }
 }

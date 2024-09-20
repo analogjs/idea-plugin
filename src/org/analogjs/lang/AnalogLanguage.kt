@@ -17,7 +17,7 @@ class AnalogLanguage private constructor()
   }
 
   override val templateSyntax: Angular2TemplateSyntax
-    get() = Angular2TemplateSyntax.V_17
+    get() = Angular2TemplateSyntax.V_18_1
 
   override val svgDialect: Boolean
     get() = false
